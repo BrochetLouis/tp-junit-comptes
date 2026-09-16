@@ -1,4 +1,5 @@
-
+import exceptions.MontantInvalideException;
+import exceptions.SoldeInsuffisantException;
 public class CompteBancaire {
 
     private final String iban;
@@ -14,17 +15,17 @@ public class CompteBancaire {
     }
     public void deposer(double montant) {
         if (montant <= 0) {
-            throw new IllegalArgumentException("Le montant du dépôt doit être positif");
+        	throw new MontantInvalideException("Le montant du dépôt doit être positif");
         }
         solde += montant;
     }
     public void retirer(double montant) {
         if (montant <= 0) {
-            throw new IllegalArgumentException("Le montant du retrait doit être positif");
+        	throw new MontantInvalideException("Le montant du retrait doit être positif");
         }
         double nouveauSolde = solde - montant;
         if (nouveauSolde < -decouvertAutorise) {
-            throw new IllegalArgumentException("Solde insuffisant compte tenu du découvert autorisé");
+        	throw new SoldeInsuffisantException("Solde insuffisant compte tenu du découvert autorisé");
         }
         solde = nouveauSolde;
     }
